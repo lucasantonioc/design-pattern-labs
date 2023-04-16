@@ -1,7 +1,6 @@
-package model;
+package br.com.dpl.model;
 
-import br.com.dpl.enumeration.PerformanceStrategyEnum;
-import br.com.dpl.model.Employee;
+import br.com.dpl.enumeration.PerformanceEnumStrategy;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -10,7 +9,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class EmployeeTest {
+class EmployeeTests {
 
     @ParameterizedTest
     @CsvSource({
@@ -18,7 +17,7 @@ class EmployeeTest {
             "GOOD,       1100.00",
             "GREAT,      1200.00"
     })
-    void testReajustarSalario(PerformanceStrategyEnum performance, BigDecimal salary) {
+    void testCalculateSalary(PerformanceEnumStrategy performance, BigDecimal salary) {
         Employee employee = new Employee("Lucas", LocalDate.now(), new BigDecimal("1000.00"), performance);
         employee.calculateReadjustment();
         assertEquals(salary, employee.getSalary());

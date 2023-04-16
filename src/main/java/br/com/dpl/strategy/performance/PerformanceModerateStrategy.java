@@ -1,13 +1,13 @@
-package br.com.dpl.enumeration.strategy;
+package br.com.dpl.strategy.performance;
 
 import br.com.dpl.factory.PerformanceFactory;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class PerformanceStrategyModerate implements PerformanceFactory {
+public class PerformanceModerateStrategy implements PerformanceFactory {
 
-    public static final PerformanceFactory INSTANCE = new PerformanceStrategyModerate();
+    public static final PerformanceFactory INSTANCE = new PerformanceModerateStrategy();
 
     @Override
     public BigDecimal calculateReadjustment(BigDecimal salary) {
