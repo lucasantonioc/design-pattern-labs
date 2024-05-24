@@ -14,4 +14,7 @@ public class DatabaseService {
         return username + "@Facebook";
     }
 
+    public String getSlackFromUsername(String username) {
+        return username + "@Slack";
+    }
 }
