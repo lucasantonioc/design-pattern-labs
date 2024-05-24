@@ -3,7 +3,6 @@ package br.com.dpl.decorator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -63,10 +62,10 @@ public class NotifierTests {
     }
 
     void testMultipleNotifier(boolean isFacebook, boolean isSlack, boolean isWhatsApp) {
-        INotifier notifier = null;
+        INotifier notifier = new Notifier("lucasantonio.c");
 
         if (isFacebook) {
-            notifier = new FacebookDecorator(new Notifier("lucasantonio.c"));
+            notifier = new FacebookDecorator(notifier);
         }
         if (isSlack) {
             notifier = new SlackDecorator(notifier);
@@ -75,8 +74,6 @@ public class NotifierTests {
             notifier = new WhatsAppDecorator(notifier);
         }
 
-        if (Objects.nonNull(notifier)) {
-            notifier.send("Hello!!!");
-        }
+        notifier.send("Hello!!!");
     }
 }
