@@ -3,6 +3,7 @@ package br.com.dpl.decorator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -49,4 +50,33 @@ public class NotifierTests {
         assertEquals("Sending Hello!!! on WhatsApp to lucasantonio.c@WhatsAppPhone", BaseNotifierDecorator.messagesSent.get(1));
     }
 
+    @Test
+    void testMultipleNotifierFacebookAndSlack() {
+        boolean isFacebook = true;
+        boolean isSlack = true;
+        boolean isWhatsApp = false;
+
+        testMultipleNotifier(isFacebook, isSlack, isWhatsApp);
+        assertTrue(BaseNotifierDecorator.messagesSent.stream().anyMatch(msg -> msg.contains("@Mail")));
+        assertTrue(BaseNotifierDecorator.messagesSent.stream().anyMatch(msg -> msg.contains("@Facebook")));
+        assertTrue(BaseNotifierDecorator.messagesSent.stream().anyMatch(msg -> msg.contains("@Slack")));
+    }
+
+    void testMultipleNotifier(boolean isFacebook, boolean isSlack, boolean isWhatsApp) {
+        INotifier notifier = null;
+
+        if (isFacebook) {
+            notifier = new FacebookDecorator(new Notifier("lucasantonio.c"));
+        }
+        if (isSlack) {
+            notifier = new SlackDecorator(notifier);
+        }
+        if (isWhatsApp) {
+            notifier = new WhatsAppDecorator(notifier);
+        }
+
+        if (Objects.nonNull(notifier)) {
+            notifier.send("Hello!!!");
+        }
+    }
 }
